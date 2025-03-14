@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "History Stats Extension",
+  "version": "1.1",
+  "description": "Shows statistics about your browsing history",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{c3c8b7d2-4b1c-4f79-8cd9-2d398a542e57}"
+    }
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "permissions": [
+    "history",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["libs/browser-polyfill.js", "background.js"],
+    "persistent": false
+  },
+  "options_ui": {
+    "page": "settings/settings.html",
+    "browser_style": true
+  },
+  "web_accessible_resources": [
+    "extension-page/index.html"
+  ],
+  "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; frame-ancestors 'self'",
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    },
+    "default_title": "History Stats",
+    "default_popup": "popup/popup.html"
+  }
+} 

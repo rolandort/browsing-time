@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-content">
+    <div class="links-container">
+      <a href="#" class="settings-link" id="openSettings">Open Settings</a>
+      <a href="#" class="settings-link" id="openExtended">Extended View</a>
+      <button id="close-popup" class="close-button">&times;</button>
+    </div>
+
+    <h1>Todays Browsing Stats v.4
+    </h1>
+    <div class="filter-section">
+      <div class="filter-container">
+        <select id="category-filter" class="category-select">
+          <option value="all">All Categories</option>
+          <!-- Categories will be populated dynamically -->
+        </select>
+        <div class="date-navigation">
+          <input type="date" id="date-filter" class="date-select">
+          <button id="prev-day" class="nav-button" title="Previous Day">&larr;</button>
+          <button id="next-day" class="nav-button" title="Next Day">&rarr;</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-container">
+      <canvas id="historyChart"></canvas>
+    </div>
+    
+    <div class="tables-container">
+      <div class="table-section">
+        <h2>Hourly Activity</h2>
+        <div class="table-container">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Pages</th>
+              </tr>
+            </thead>
+            <tbody id="history-data">
+              <tr>
+                <td colspan="2">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../libs/browser-polyfill.js"></script>
+  <script src="../libs/chart.js" type="module"></script>
+  <script src="popup.js"></script>
+</body>
+</html> 

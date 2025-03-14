@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="settings.css">
+  <title>History Stats Settings</title>
+</head>
+<body>
+  <section class="settings">
+    <div class="settings-container">
+      <h1>History Stats Settings</h1>
+      <p class="view-link-container"><a href="../extension-page/index.html" class="view-link">View Stats</a></p>
+      <div class="settings-content">
+        <div class="categories-section">
+          <h2>URL Categories</h2>
+          <p class="description">Define categories to group your browsing history using regular expressions.</p>
+          
+          <table>
+            <thead>
+            <tr>
+              <td>Identifier</td>
+              <td>Regex Pattern</td>
+              <td>Delete</td>
+            </tr>
+          </thead>
+          <tbody id="categories-list">
+            <!-- Categories will be inserted here -->
+          </tbody>
+        </table>
+
+          <div class="category-actions">
+            <button id="add-category" class="button primary">Add Category</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="../browser-polyfill.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html> 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>History Stats</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>History Stats - Extended View</h1>
+      <p>Last 30 days of activity <a href="../settings/settings.html" class="settings-link">Settings</a></p>
+    </header>
+    <main>
+      <div class="charts-section">
+        <section class="chart-block">
+          <div class="section-header">
+            <h2>Daily Activity</h2>
+            <select id="category-filter" class="category-select">
+              <option value="all">All Categories</option>
+              <!-- Categories will be populated dynamically -->
+            </select>
+          </div>
+          <div class="chart-container">
+            <canvas id="historyChart"></canvas>
+          </div>
+        </section>
+        
+        <section class="chart-block">
+          <h2>Category Stats</h2>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </section>
+
+        <section class="chart-block">
+          <h2>Top Domains</h2>
+          <div class="chart-container donut-container">
+            <canvas id="domainChart"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <div class="tables-section">
+        <section class="table-block">
+          <h2>Daily Activity</h2>
+          <div class="table-container">
+            <table id="history-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Pages</th>
+                </tr>
+              </thead>
+              <tbody id="history-data">
+                <tr>
+                  <td colspan="2">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="table-block">
+          <h2>Category Stats</h2>
+          <div class="table-container">
+            <table id="category-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Pages</th>
+                </tr>
+              </thead>
+              <tbody id="category-data">
+                <tr>
+                  <td colspan="2">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="table-block">
+          <h2>Top Domains</h2>
+          <div class="table-container">
+            <table id="domain-table">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Pages</th>
+                </tr>
+              </thead>
+              <tbody id="domain-data">
+                <tr>
+                  <td colspan="2">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="../libs/browser-polyfill.js"></script>
+  <script src="../libs/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html> 
