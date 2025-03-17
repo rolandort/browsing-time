@@ -2,107 +2,70 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>History Stats</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Browsing Stats Details</title>
+  <link href="../shared/styles.css" rel="stylesheet" />
+  <link  href="styles.css" rel="stylesheet">
+  <link href="../shared/fontawesome.min.css" rel="stylesheet" />
+  <link href="../shared/solid.min.css" rel="stylesheet" />
 </head>
 <body>
   <div class="container">
+    <div class="header-container">
+      <div class="header-title">Browsing Stats Details</div>
+      <div class="links-container">
+        <i class="fas fa-gears fa-fw settings-link" id="openSettings" title="Open Settings"></i>
+        <i class="fas theme-button fa-fw" id="theme-switch" title="Toggle dark mode"></i>
+      </div>
+    </div>
+
     <header>
-      <h1>History Stats - Extended View</h1>
-      <p>Last 30 days of activity <a href="../settings/settings.html" class="settings-link">Settings</a></p>
+      <div class="filter-container">
+        <select id="category-filter" class="category-select">
+          <option value="all">All Categories</option>
+          <!-- Categories will be populated dynamically -->
+        </select>
+        <div class="date-navigation">
+          <input type="date" id="date-filter" class="date-select">
+          <button id="prev-day" class="nav-button" title="Previous Day"><i class="fas fa-arrow-left fa-fw"></i></button>
+          <button id="today" class="nav-button" title="Today"><i class="fa-solid fa-calendar-day fa-fw"></i></i></button>
+          <button id="next-day" class="nav-button" title="Next Day"><i class="fas fa-arrow-right fa-fw"></i></button>
+        </div>
+      </div>
     </header>
     <main>
-      <div class="charts-section">
-        <section class="chart-block">
-          <div class="section-header">
-            <h2>Daily Activity</h2>
-            <select id="category-filter" class="category-select">
-              <option value="all">All Categories</option>
-              <!-- Categories will be populated dynamically -->
-            </select>
+
+      <section class="chart-block full-width">
+        <div class="chart-container small-container">
+          <canvas id="categoryChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <div class="medium-container">
+            <canvas id="dailyChart"></canvas>
           </div>
-          <div class="chart-container">
-            <canvas id="historyChart"></canvas>
+          <div class="default-container">
+            <canvas id="hourlyChart"></canvas>
           </div>
-        </section>
+        </div>
         
-        <section class="chart-block">
-          <h2>Category Stats</h2>
-          <div class="chart-container">
-            <canvas id="categoryChart"></canvas>
-          </div>
-        </section>
+        <div class="chart-container default-container">
+          <canvas id="domainChart"></canvas>
+        </div>
+      </section>
 
-        <section class="chart-block">
-          <h2>Top Domains</h2>
-          <div class="chart-container donut-container">
-            <canvas id="domainChart"></canvas>
-          </div>
-        </section>
-      </div>
-
-      <div class="tables-section">
-        <section class="table-block">
-          <h2>Daily Activity</h2>
-          <div class="table-container">
-            <table id="history-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Pages</th>
-                </tr>
-              </thead>
-              <tbody id="history-data">
-                <tr>
-                  <td colspan="2">Loading...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="table-block">
-          <h2>Category Stats</h2>
-          <div class="table-container">
-            <table id="category-table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Pages</th>
-                </tr>
-              </thead>
-              <tbody id="category-data">
-                <tr>
-                  <td colspan="2">Loading...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="table-block">
-          <h2>Top Domains</h2>
-          <div class="table-container">
-            <table id="domain-table">
-              <thead>
-                <tr>
-                  <th>Domain</th>
-                  <th>Pages</th>
-                </tr>
-              </thead>
-              <tbody id="domain-data">
-                <tr>
-                  <td colspan="2">Loading...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
     </main>
+
+    <div id="footer">
+      Browsing Stats by Roland
+    </div>
+
   </div>
+
   <script src="../libs/browser-polyfill.js"></script>
   <script src="../libs/chart.js"></script>
+  <script src="../libs/moment.js"></script>
+  <script src="../libs/chartjs-adapter-moment.js"></script>
+  <script src="../shared/theme.js"></script>
   <script src="script.js"></script>
 </body>
 </html> 

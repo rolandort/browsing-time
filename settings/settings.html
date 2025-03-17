@@ -2,34 +2,37 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="settings.css">
-  <title>History Stats Settings</title>
+  <title>Browsing Stats Settings</title>
+  <link href="../shared/styles.css" rel="stylesheet" />
+  <link href="settings.css" rel="stylesheet" />
+  <link href="../shared/fontawesome.min.css" rel="stylesheet" />
+  <link href="../shared/solid.min.css" rel="stylesheet" />
 </head>
 <body>
   <section class="settings">
     <div class="settings-container">
-      <h1>History Stats Settings</h1>
-      <p class="view-link-container"><a href="../extension-page/index.html" class="view-link">View Stats</a></p>
+      <h1>Browsing Stats Settings</h1>
       <div class="settings-content">
         <div class="categories-section">
-          <h2>URL Categories</h2>
-          <p class="description">Define categories to group your browsing history using regular expressions.</p>
-          
+          <h2>Categories</h2>
+          <p class="description">Define categories to group your browsing history by domains using regular expressions.</p>
           <table>
             <thead>
-            <tr>
-              <td>Identifier</td>
-              <td>Regex Pattern</td>
-              <td>Delete</td>
-            </tr>
-          </thead>
-          <tbody id="categories-list">
+              <tr>
+                <td>Name</td>
+                <td>Domain Regex Pattern</td>
+                <td>&nbsp;</td>
+              </tr>
+            </thead>
+            <tbody id="categories-list">
             <!-- Categories will be inserted here -->
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+            </tbody>
+          </table>
 
           <div class="category-actions">
-            <button id="add-category" class="button primary">Add Category</button>
+            <i class="fas fa-plus-circle fa-fw add-category" id="add-category" title="Add new Category"></i>
           </div>
         </div>
       </div>
