@@ -1,4 +1,4 @@
-# Hello World Firefox Extension
+# History Stats Firefox Extension
 
 A simple Firefox extension that shows a "Hello World" message when clicking the browser action icon.
 

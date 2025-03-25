@@ -330,6 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             },
             grid: {
+              display: false,
               color: getComputedStyle(document.documentElement).getPropertyValue('--chart-grid'),
               drawOnChartArea: true,
               drawTicks: true
@@ -339,9 +340,11 @@ document.addEventListener('DOMContentLoaded', function() {
               autoSkip: false,
               color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
-                size: 11
+                size: 10
               },
               align: 'start',
+              maxRotation: 0,
+  						minRotation: 0
             },
             min: moment('00:00', 'HH:mm').toDate(),
             max: moment('23:59', 'HH:mm').toDate(),
@@ -360,18 +363,15 @@ document.addEventListener('DOMContentLoaded', function() {
               precision: 0,
               color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
-                size: 12
+                size: 10
               }
             },
             title: {
               display: false,
               text: 'Number of Pages Visited',
               color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
-              font: {
-                size: 12,
-                weight: 'bold'
-              },
-              padding: { bottom: 10 }
+            
+              // padding: { bottom: 10 }
             }
           }
         }
