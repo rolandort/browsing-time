@@ -74,10 +74,6 @@
   transition: all 0.2s ease;
 }
 
-.view-link:hover {
-  background-color: var(--hover-color);
-}
-
 .pattern-input {
   width: 100%;
 }

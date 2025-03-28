@@ -101,10 +101,6 @@ th {
   z-index: 1;
 }
 
-tr:hover {
-  color: var(--table-row-hover);
-}
-
 /* Common button styles */
 button {
   background-color: var(--primary-color);
