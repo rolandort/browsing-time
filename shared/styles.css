@@ -91,7 +91,6 @@ table {
 th, td {
   padding: 12px;
   text-align: left;
-  /* border-bottom: 1px solid var(--border-color); */
 }
 
 th {
@@ -156,7 +155,7 @@ h2 {
 /* Common chart container styles */
 .chart-container {
   position: relative;
-  margin: 20px 0;
+  margin-bottom: 12px;
   background-color: var(--card-background);
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--card-shadow);
@@ -199,7 +198,6 @@ input {
   border-radius: 4px;
   padding: 8px;
   font-size: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus {
@@ -208,24 +206,10 @@ input:focus {
   box-shadow: 0 0 0 2px var(--input-focus-shadow);
 }
 
-/* Common card styles */
-.card {
-  background-color: var(--card-background);
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px var(--card-shadow);
-  padding: 16px;
-  margin-bottom: 16px;
-} 
-
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-#header {
-  display: flex;
 }
 
 #footer {
@@ -240,5 +224,5 @@ input:focus {
   height: 30px;
 }
 
-dt { float: left; clear: left; width: 8em; }
+dt { float: left; clear: left; width: 6em; }
 dd { float: left; }

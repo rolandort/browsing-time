@@ -49,6 +49,7 @@ body {
   gap: 12px;
   align-items: center;
   margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .date-navigation {
@@ -144,43 +145,7 @@ table {
     font-size: 24px;
   }
 
-
   .table-container {
     max-height: 300px;
   }
-} 
-
-/* Settings-specific styles */
-.settings-container {
-  background-color: var(--background-color);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-  margin: 20px auto;
-  max-width: 800px;
 }
-
-.description {
-  color: var(--text-color);
-  opacity: 0.8;
-  font-size: 14px;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.settings-content {
-  min-height: 200px;
-}
-
-.table-block {
-  background: var(--card-background);
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-}
-
-.table-container {
-  max-height: 400px;
-  overflow-y: auto;
-} 
