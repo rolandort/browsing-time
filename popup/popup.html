@@ -20,32 +20,27 @@
       </div>
     </div>
 
-    <div class="filter-section">
-      <div class="filter-container">
-        <select id="category-filter" class="category-select">
-          <option value="all">All Categories</option>
-          <!-- Categories will be populated dynamically -->
-        </select>
-        <div class="date-navigation">
-          <input type="date" id="date-filter" class="date-select">
-          <button id="prev-day" class="nav-button" title="Previous Day">&larr;</button>
-          <button id="next-day" class="nav-button" title="Next Day">&rarr;</button>
-        </div>
-      </div>
+    <div class="filter-container">
+      <select id="category-filter" class="category-select">
+        <option value="all">All Categories</option>
+        <!-- Categories will be populated dynamically -->
+      </select>
     </div>
 
-    <section class="chart-block">
-      <div class="chart-container small-container">
-        <canvas id="categoryChart"></canvas>
-      </div>
-    </section>
+    <div class="chart-container small-container">
+      <canvas id="categoryChart"></canvas>
+    </div>
 
     <div class="chart-container default-container">
-      <canvas id="historyChart"></canvas>
+      <canvas id="hourlyChart"></canvas>
     </div>
-  
-    <div id="footer">
-      Browsing Stats by Roland
+    
+    <div class="chart-container _small-container">
+      <dl class="stats-container">
+        <dt>Total Time</dt><dd><span id="totalTime"></span> (<span id="startTime"></span> - <span id="endTime"></span>)</dd>
+        <dt>Active Time</dt><dd><span id="activeTime"></span></dd>
+        <dt>Break Time</dt><dd><span id="breakTime"></span></dd>
+      </dl>
     </div>
 
   </div>

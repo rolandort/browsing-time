@@ -8,8 +8,8 @@ function initializeTheme(themeButton) {
     if (themeButton) {
       themeButton.classList.toggle('light-mode', theme === 'light');
       themeButton.innerHTML = theme === 'dark' ? 
-        '<i class="fas fa-sun"></i>' : 
-        '<i class="fas fa-moon"></i>';
+        '<i class="fas fa-moon"></i>' : 
+        '<i class="fas fa-sun"></i>';
     }
     
     // Dispatch event for chart updates

@@ -30,6 +30,7 @@ yarn.lock
 coverage/
 .nyc_output/
 test-results/
+project-docs/
 
 # Environment variables and secrets
 .env
@@ -52,7 +53,7 @@ debug.log
 .eslintcache
 .web-extension-id
 
-.DS_Store
+.DS_Store/
 
 # Development-only resources
 dev-resources/

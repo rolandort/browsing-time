@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display: true,
             text: 'Categories',
             align: 'start',
-            color: themeColors.text,
+            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
             font: {
               size: 14,
               weight: 'bold'
@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
             align: 'start',
             labels: {
               boxWidth: 12,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
                 size: 12
               },
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     text: `${dataset.label} (${percentage}%)`,
                     fillStyle: dataset.backgroundColor,
                     strokeStyle: dataset.borderColor,
-                    fontColor: themeColors.text, // color does not work for doughnut chart
+                    fontColor: getComputedStyle(document.documentElement).getPropertyValue('--text-color'), // color does not work for doughnut chart
                     lineWidth: 1,
                     hidden: false,
                     index: i
@@ -346,11 +346,11 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             ticks: {
               display: false,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
   
             },
             title: {
-              color: themeColors.text
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
             }
           },
           y: {
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             ticks: {
               display: false,
-              color: themeColors.text
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
             }
           }
         }
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (selectedCategory === 'all') return true;
       return matchUrlToCategory(item.url, currentCategories) === selectedCategory;
     });
-    
+
     // Fill in the actual visit counts
     filteredItems.forEach(item => {
       if (item && item.lastVisitTime) {
@@ -410,6 +410,46 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
+    // Calculate actual active time of the current day
+    const visits = filteredItems.map(item => item.lastVisitTime);
+    const sortedVisits = visits.sort((a, b) => a - b);
+    let totalActiveTime = 0;
+    let prevVisitTime = null;
+    let breaks = 0;
+    for (const visitTime of sortedVisits) {
+      if (prevVisitTime && visitTime - prevVisitTime > 10 * 60 * 1000) {
+        breaks++;
+      } else {
+        totalActiveTime += visitTime - (prevVisitTime || visitTime);
+      }
+      prevVisitTime = visitTime;
+    }
+    const activeTime = document.getElementById('activeTime');
+    const activeTimeHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
+    const activeTimeMinutes = Math.floor(totalActiveTime / 1000 / 60) % 60;
+    activeTime.textContent = `${activeTimeHours}h ${activeTimeMinutes}min`;
+    
+
+    // Calculate start and end times
+    const firstVisitOfTheDay = filteredItems.length > 0 ? new Date(Math.min(...filteredItems.map(item => item.lastVisitTime))) : null;
+    const lastVisitOfTheDay = filteredItems.length > 0 ? new Date(Math.max(...filteredItems.map(item => item.lastVisitTime))) : null;
+
+    const startTime = document.getElementById('startTime');
+    startTime.textContent = firstVisitOfTheDay ? firstVisitOfTheDay.toLocaleTimeString() : 'N/A'
+    
+    const endTime = document.getElementById('endTime');
+    endTime.textContent = lastVisitOfTheDay ? lastVisitOfTheDay.toLocaleTimeString() : 'N/A'
+
+    if (firstVisitOfTheDay && lastVisitOfTheDay) {
+      const totalTime = document.getElementById('totalTime');
+      const duration = moment.duration(moment(lastVisitOfTheDay).diff(moment(firstVisitOfTheDay)));
+      totalTime.textContent = `${duration.hours()}h ${duration.minutes()}min`;
+
+      const breakTime = document.getElementById('breakTime');
+      const breakDuration = moment.duration(duration - totalActiveTime);
+      breakTime.textContent = `${breakDuration.hours()}h ${breakDuration.minutes()}min (${breaks} breaks)`;
+  }
+      
     // Create arrays for chart data
     const intervals = Object.keys(intervalStats).map(interval => {
       const intervalNum = parseInt(interval);
@@ -444,8 +484,8 @@ document.addEventListener('DOMContentLoaded', function() {
         datasets: [{
           label: 'Pages',
           data: dataPoints,
-          backgroundColor: themeColors.chartBar,
-          borderColor: themeColors.chartBorder,
+          backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--chart-bar'),
+          borderColor: getComputedStyle(document.documentElement).getPropertyValue('--chart-border'),
           borderWidth: 1,
           borderRadius: 3
         }]
@@ -461,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display: true,
             text: 'Hourly Activity (' + chartTitle + ')',
             align: 'start',
-            color: themeColors.text,
+            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
             padding: { bottom: 20 },
             font: {
               size: 14,
@@ -484,12 +524,12 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             grid: {
               offset: true,
-              display: false
+              display: false,
             },
             ticks: {
               source: 'auto',
               autoSkip: false,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
                 size: 11
               },
@@ -506,11 +546,11 @@ document.addEventListener('DOMContentLoaded', function() {
           y: {
             beginAtZero: true,
             grid: {
-              color: themeColors.chartGrid
+              color: getComputedStyle(document.documentElement).getPropertyValue('--chart-grid')
             },
             ticks: {
               precision: 0,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
                 size: 12
               }
@@ -518,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: {
               display: true,
               text: 'Pages',
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               padding: { bottom: 10 }
             }
           }
@@ -593,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       fillStyle: data.datasets[0].backgroundColor[i],
                       strokeStyle: data.datasets[0].borderColor[i],
                       lineWidth: 1,
-                      fontColor: themeColors.text, // color does not work for doughnut chart
+                      fontColor: getComputedStyle(document.documentElement).getPropertyValue('--text-color'), // color does not work for doughnut chart
                       hidden: false,
                       index: i
                     };
@@ -606,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
           title: {
             display: true,
             text: 'Top Domains',
-            color: themeColors.text,
+            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
             align: 'start',
             font: {
               size: 14,
@@ -750,7 +790,7 @@ document.addEventListener('DOMContentLoaded', function() {
           title: {
             display: true,
             text: chartTitle,
-            color: themeColors.text,
+            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
             align: 'start',
             padding: { bottom: 20 },
             font: {
@@ -771,12 +811,12 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             grid: {
               display: false,
-              color: themeColors.chartGrid
+              color: getComputedStyle(document.documentElement).getPropertyValue('--chart-grid')
             },
             ticks: {
               source: 'auto',
               autoSkip: false,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
                 size: 11
               }
@@ -784,17 +824,17 @@ document.addEventListener('DOMContentLoaded', function() {
             title: {
               display: true,
               text: 'Date',
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
             }
           },
           y: {
             beginAtZero: true,
             grid: {
-              color: themeColors.chartGrid
+              color: getComputedStyle(document.documentElement).getPropertyValue('--chart-grid')
             },
             ticks: {
               precision: 0,
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               font: {
                 size: 12
               }
@@ -802,7 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: {
               display: true,
               text: 'Pages',
-              color: themeColors.text,
+              color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
               padding: { bottom: 10 }
             }
           }

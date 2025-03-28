@@ -3,13 +3,13 @@
 /* Popup-specific styles */
 body {
   width: 440px;
-  min-height: 300px;
-  max-height: 600px;
+  min-height: 200px;
+  max-height: 550px;
   overflow-y: auto;
 }
 
 .container {
-  padding: 16px;
+  padding: 12px;
 }
 
 /* Popup-specific header */
@@ -37,11 +37,6 @@ body {
   height: 160px;
 }
 
-/* Chart container */
-.chart-container {
-  margin: 20px 0;
-}
-
 .popup-content {
   width: 400px;
   padding: 20px;
@@ -49,6 +44,10 @@ body {
   position: relative;
 }
 
+.chart-container {
+  position: relative;
+  padding: 12px;
+}
 
 h1 {
   margin: 0;
@@ -123,14 +122,14 @@ td:last-child, th:last-child {
 
 .filter-section {
   margin: 10px 0;
-  text-align: center;
+  text-align: left;
 }
 
 .filter-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 10px;
-  align-items: center;
+  align-items: left;
 }
 
 .date-navigation {

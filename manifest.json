@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "History Stats Extension",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Shows statistics about your browsing history",
   "browser_specific_settings": {
     "gecko": {

@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log("History Plugin loaded...");
   const tbody = document.getElementById('history-data');
   const categoryFilter = document.getElementById('category-filter');
-  const dateFilter = document.getElementById('date-filter');
-  const prevDayButton = document.getElementById('prev-day');
-  const nextDayButton = document.getElementById('next-day');
   const themeButton = document.getElementById('theme-switch');
-  let historyChart = null;
+  let hourlyChart = null;
   let categoryChart = null;
   let currentHistoryItems = [];
   let currentCategories = [];
@@ -32,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Set default date to today
   const today = new Date();
-  dateFilter.value = today.toISOString().split('T')[0];
   updateNavigationButtons();
   
   // Add settings link handler
@@ -61,41 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDisplayForCategory(currentHistoryItems);
   });
 
-  // Add date filter handler
-  dateFilter.addEventListener('change', function() {
-    loadHistoryForDate(dateFilter.value);
-    updateNavigationButtons();
-  });
-
-  // Add date navigation handlers
-  prevDayButton.addEventListener('click', function() {
-    const currentDate = new Date(dateFilter.value);
-    currentDate.setDate(currentDate.getDate() - 1);
-    dateFilter.value = currentDate.toISOString().split('T')[0];
-    loadHistoryForDate(dateFilter.value);
-    updateNavigationButtons();
-  });
-
-  nextDayButton.addEventListener('click', function() {
-    const currentDate = new Date(dateFilter.value);
-    currentDate.setDate(currentDate.getDate() + 1);
-    dateFilter.value = currentDate.toISOString().split('T')[0];
-    loadHistoryForDate(dateFilter.value);
-    updateNavigationButtons();
-  });
-
   function updateNavigationButtons() {
-    const currentDate = new Date(dateFilter.value);
+    const currentDate = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    // Disable next day button if current date is today
-    nextDayButton.disabled = currentDate.getTime() >= today.getTime();
-    
-    // Update button styles
-    nextDayButton.style.opacity = nextDayButton.disabled ? '0.5' : '1';
-    nextDayButton.style.cursor = nextDayButton.disabled ? 'not-allowed' : 'pointer';
-  }
+ }
 
   function updateCategoryChart(historyItems) {
     if (!historyItems || historyItems.length === 0 || !currentCategories || currentCategories.length === 0) {
@@ -128,18 +94,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const categories = sortedCategories.map(([category]) => category);
     const counts = sortedCategories.map(([,count]) => count);
+    
+    // Initialize 10-minute interval stats (144 intervals in a day)
+    const intervalStats = {};
+    for (let interval = 0; interval < 144; interval++) {
+      intervalStats[interval] = 0;
+    }
+    
+    // Get start and end of selected day
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(startOfDay.getDate() + 1);
+
+    // Filter by selected category
+    const selectedCategory = categoryFilter.value;
+    const filteredItems = selectedCategory === 'all' ? 
+      historyItems : 
+      historyItems.filter(item => matchUrlToCategory(item.url, currentCategories) === selectedCategory);
+
+    // Fill in the actual visit counts
+    filteredItems.forEach(item => {
+      if (item && item.lastVisitTime) {
+        const visitTime = new Date(item.lastVisitTime);
+        if (visitTime >= startOfDay && visitTime < endOfDay) {
+          // Calculate which 10-minute interval this falls into
+          const minutes = visitTime.getHours() * 60 + visitTime.getMinutes();
+          const interval = Math.floor(minutes / 10);
+          intervalStats[interval]++;
+        }
+      }
+    });
+
+
 
     // Create colors array with gray for Uncategorized
     const colors = categories.map((category, index) => {
       if (category === 'Uncategorized') {
-        return 'hsla(0, 0%, 75%, 0.7)'; // gray color for Uncategorized
+        return 'hsla(0, 0%, 50%, 0.7)'; // gray color for Uncategorized
       }
       const hue = (index * 137.508) % 360;
       return `hsla(${hue}, 70%, 60%, 0.7)`;
     });
 
     const borderColors = colors.map(color => {
-      if (color === 'hsla(0, 0%, 75%, 0.7)') {
+      if (color === 'hsla(0, 0%, 50%, 0.7)') {
         return 'hsla(0, 0%, 75%, 1)'; // solid gray for Uncategorized border
       }
       return color.replace('0.7', '1');
@@ -283,14 +282,14 @@ document.addEventListener('DOMContentLoaded', function() {
     return 'Uncategorized';
   }
 
-  function createChart(intervals, counts, chartTitle) {
-    const ctx = document.getElementById('historyChart').getContext('2d');
+  function createHourlyChart(intervals, counts, chartTitle) {
+    const ctx = document.getElementById('hourlyChart').getContext('2d');
     
-    if (historyChart) {
-      historyChart.destroy();
+    if (hourlyChart) {
+      hourlyChart.destroy();
     }
 
-    historyChart = new Chart(ctx, {
+    hourlyChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: intervals,
@@ -370,8 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
               display: false,
               text: 'Number of Pages Visited',
               color: getComputedStyle(document.documentElement).getPropertyValue('--text-color'),
-            
-              // padding: { bottom: 10 }
             }
           }
         }
@@ -381,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function updateDisplayForCategory(historyItems) {
     if (!historyItems || historyItems.length === 0) {
-      createChart([], [], 'No Data');
+      createHourlyChart([], [], 'No Data');
       return;
     }
 
@@ -392,8 +389,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Get start and end of selected day
-    const selectedDate = new Date(dateFilter.value);
-    const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(startOfDay);
     endOfDay.setDate(startOfDay.getDate() + 1);
     
@@ -416,6 +413,50 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
+    // Calculate actual working time of the current day
+    const visits = filteredItems.map(item => item.lastVisitTime);
+    const sortedVisits = visits.sort((a, b) => a - b);
+    let totalActiveTime = 0;
+    let prevVisitTime = null;
+    let breaks = 0;
+    for (const visitTime of sortedVisits) {
+      if (prevVisitTime && visitTime - prevVisitTime > 10 * 60 * 1000) {
+        breaks++;
+      } else {
+        totalActiveTime += visitTime - (prevVisitTime || visitTime);
+      }
+      prevVisitTime = visitTime;
+    }
+    const activeTime = document.getElementById('activeTime');
+    const activeTimeHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
+    const activeTimeMinutes = Math.floor(totalActiveTime / 1000 / 60) % 60;
+    activeTime.textContent = `${activeTimeHours}h ${activeTimeMinutes}min`;
+
+    // Calculate start and end times
+    const firstVisitOfTheDay = filteredItems.length > 0 ? new Date(Math.min(...filteredItems.map(item => item.lastVisitTime))) : null;
+    const lastVisitOfTheDay = filteredItems.length > 0 ? new Date(Math.max(...filteredItems.map(item => item.lastVisitTime))) : null;
+
+    const startTime = document.getElementById('startTime');
+    startTime.textContent = firstVisitOfTheDay ? firstVisitOfTheDay.toLocaleTimeString() : 'N/A'
+    
+    const endTime = document.getElementById('endTime');
+    endTime.textContent = lastVisitOfTheDay ? lastVisitOfTheDay.toLocaleTimeString() : 'N/A'
+
+    if (firstVisitOfTheDay && lastVisitOfTheDay) {
+      const totalTime = document.getElementById('totalTime');
+      const duration = moment.duration(moment(lastVisitOfTheDay).diff(moment(firstVisitOfTheDay)));
+      totalTime.textContent = `${duration.hours()}h ${duration.minutes()}min`;
+
+      const breakTime = document.getElementById('breakTime');
+      const breakDuration = moment.duration(duration - totalActiveTime);
+      breakTime.textContent = `${breakDuration.hours()}h ${breakDuration.minutes()}min (${breaks} breaks)`;
+    } else {
+      const totalTime = document.getElementById('totalTime');
+      totalTime.textContent = 'N/A';
+      const breakTime = document.getElementById('breakTime');
+      breakTime.textContent = 'N/A';
+    }
+
     // Create arrays for chart data
     const intervals = Object.keys(intervalStats).map(interval => {
       const intervalNum = parseInt(interval);
@@ -426,28 +467,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const counts = Object.values(intervalStats);
 
     // Update chart title to include category info
-    const chartTitle = selectedCategory === 'all' ? 
-      (selectedDate.toDateString() === new Date().toDateString() ? 'Today\'s Activity' : 
-        `Activity on ${selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`) :
-      (selectedDate.toDateString() === new Date().toDateString() ? `Today's ${selectedCategory} Activity)` : 
-        `${selectedCategory} Activity on ${selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`);
+    const chartTitle = selectedCategory === 'all' ? 'Today\'s Activity' : `Today's ${selectedCategory} Activity`;
 
     // Create the chart with updated title
-    createChart(intervals, counts, chartTitle);
-  }
-
-  function updateTable(historyItems) {
-    currentHistoryItems = historyItems;
-    
-    // Load categories and update display
-    browser.storage.sync.get('categories').then(result => {
-      currentCategories = result.categories || [];
-      updateCategoryFilter(currentCategories);
-      updateDisplayForCategory(historyItems);
-    }).catch(error => {
-      console.error('Error loading categories:', error);
-      updateDisplayForCategory(historyItems);
-    });
+    createHourlyChart(intervals, counts, chartTitle);
   }
 
   function updateCategoryFilter(categories) {
@@ -487,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   try {
     // Initial load with today's date
-    loadHistoryForDate(dateFilter.value);
+    loadHistoryForDate(new Date());
   } catch (error) {
     onError(error);
   }
