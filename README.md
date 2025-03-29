@@ -30,7 +30,7 @@ Plugin Settings
 - View detailed statistics about your browsing history
 - Analyze browsing patterns by time of day and categories
 - Track website usage across different domains
-- Categorize websites using customizable patterns
+- Categorize websites using customizable domain patterns
 - Filter statistics by date and category
 - Dark mode support for comfortable viewing
 - Privacy-focused: all data processing happens locally in your browser
@@ -39,6 +39,7 @@ Plugin Settings
 ## Installation
 
 ### Developer Installation
+
 1. Open Firefox and navigate to `about:debugging`
 2. Click on "This Firefox" in the left sidebar
 3. Click on "Load Temporary Add-on"
@@ -70,14 +71,18 @@ No data is sent to external servers - all processing happens on your device.
 
 ## Development
 
-The extension consists of the following files:
-- `manifest.json`: Extension configuration
-- `popup/popup.html`: Popup HTML structure
-- `popup/popup.css`: Popup styling
-- `popup/popup.js`: Popup functionality
-- `extension-page/`: Extended view files
-- `settings/`: Settings page files
-- `shared/`: Shared resources
+The extension has the following structure:
+```
+history-stats/
+├── manifest.json       # Extension configuration
+├── background.js       # Background script
+├── libs/               # Third-party libraries
+├── shared/             # Shared resources
+├── popup/              # Browser action popup
+├── extension-page/     # Extended statistics view
+├── settings/           # Settings page
+└── icons/              # Extension icons
+```
 
 ### Setup Development Environment
 
