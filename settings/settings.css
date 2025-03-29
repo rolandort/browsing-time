@@ -1,9 +1,5 @@
 
 
-body {
-  background-color: transparent;
-  color: var(--text-color);
-}
 /* Settings-specific styles */
 .settings-container {
   background-color: transparent;
