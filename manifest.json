@@ -1,8 +1,11 @@
 {
   "manifest_version": 2,
   "name": "History Stats Extension",
+  "short_name": "History Stats",
+  "author": "Roland Ortner",
   "version": "1.2",
   "description": "Shows statistics about your browsing history",
+  "homepage_url": "https://github.com/rolandortner/history-stats",
   "browser_specific_settings": {
     "gecko": {
       "id": "{c3c8b7d2-4b1c-4f79-8cd9-2d398a542e57}"

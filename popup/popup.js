@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const filteredItems = selectedCategory === 'all' ? 
       historyItems : 
       historyItems.filter(item => matchUrlToCategory(item.url, currentCategories) === selectedCategory);
-    
+
     // Fill in the actual visit counts for filtered items
     filteredItems.forEach(item => {
       if (item && item.lastVisitTime) {
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
-
+    
     // Calculate actual working time of the current day
     const visits = filteredItems.map(item => item.lastVisitTime);
     const sortedVisits = visits.sort((a, b) => a - b);

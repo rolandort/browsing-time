@@ -17,9 +17,50 @@ function initializeTheme(themeButton) {
     document.dispatchEvent(themeChangeEvent);
   }
 
-  // Initialize theme
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
+  // Check for system preference
+  function getPreferredTheme() {
+    // Check if user has already set a preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      return savedTheme;
+    }
+    
+    // Otherwise, use system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    
+    // Default to light mode
+    return 'light';
+  }
+
+  // Initialize theme based on preference
+  const preferredTheme = getPreferredTheme();
+  setTheme(preferredTheme);
+
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Modern browsers
+    if (colorSchemeQuery.addEventListener) {
+      colorSchemeQuery.addEventListener('change', (e) => {
+        // Only change theme if user hasn't manually set a preference
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    } 
+    // Older browsers
+    else if (colorSchemeQuery.addListener) {
+      colorSchemeQuery.addListener((e) => {
+        // Only change theme if user hasn't manually set a preference
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+  }
 
   // Theme switch handler
   if (themeButton) {
@@ -36,4 +77,4 @@ function initializeTheme(themeButton) {
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { initializeTheme };
-} 
+}

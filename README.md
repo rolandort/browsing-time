@@ -1,5 +1,7 @@
 # History Stats Firefox Extension
 
+![icon](icons/icon-96.png)
+
 A Firefox extension that provides statistics and insights about your browsing history.
 
 <img src="images/screenshot-popup.png" width="300"/><br>
@@ -16,7 +18,6 @@ Plugin Settings
 - [Installation](#installation)
 - [Usage](#usage)
 - [How It Works](#how-it-works)
-- [Icons](#icons)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -67,14 +68,6 @@ History Stats accesses your browser history data (with your permission) and proc
 
 No data is sent to external servers - all processing happens on your device.
 
-## Icons
-
-Before loading the extension, you need to create two icon files:
-- `icons/icon-48.png` (48x48 pixels)
-- `icons/icon-96.png` (96x96 pixels)
-
-You can use any image editor to create these icons, or use placeholder icons for testing.
-
 ## Development
 
 The extension consists of the following files:
@@ -85,7 +78,6 @@ The extension consists of the following files:
 - `extension-page/`: Extended view files
 - `settings/`: Settings page files
 - `shared/`: Shared resources
-- `icons/`: Directory containing extension icons
 
 ### Setup Development Environment
 

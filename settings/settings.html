@@ -3,42 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <title>Browsing Stats Settings</title>
-  <link href="../shared/styles.css" rel="stylesheet" />
+  <!-- <link href="../shared/styles.css" rel="stylesheet" /> -->
   <link href="settings.css" rel="stylesheet" />
   <link href="../shared/fontawesome.min.css" rel="stylesheet" />
   <link href="../shared/solid.min.css" rel="stylesheet" />
 </head>
 <body>
+  FKJDFÖLKSJFÖLKJ<br>
+  sdkfdsölkfj <br>
   <section class="settings">
-    <div class="settings-container">
       <h1>Browsing Stats Settings</h1>
-      <div class="settings-content">
-        <div class="categories-section">
-          <h2>Categories</h2>
-          <p class="description">Define categories to group your browsing history by domains using regular expressions.</p>
-          <table>
-            <thead>
-              <tr>
-                <td>Name</td>
-                <td>Domain Regex Pattern</td>
-                <td>&nbsp;</td>
-              </tr>
-            </thead>
-            <tbody id="categories-list">
-            <!-- Categories will be inserted here -->
-            </tbody>
-          </table>
-            </tbody>
-          </table>
-
-          <div class="category-actions">
-            <i class="fas fa-plus-circle fa-fw add-category" id="add-category" title="Add new Category"></i>
-          </div>
+      <div class="general-settings-section">
+        <h2>General Settings</h2>
+        <p class="description">Configure general behavior of the extension.</p>
+        <div class="setting-item">
+          <label for="session-timeout">Session Timeout (minutes):</label>
+          <input type="number" id="session-timeout" min="1" max="60" class="number-input">
+          <p class="setting-description">Time of inactivity after which a new browsing session is considered to have started (default: 10 minutes).</p>
         </div>
       </div>
-    </div>
+
+      <div class="categories-section">
+        <h2>Categories</h2>
+        <p class="description">Define categories to group your browsing history by domains using regular expressions.</p>
+        <table>
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Domain Regex Pattern</td>
+              <td>&nbsp;</td>
+            </tr>
+          </thead>
+          <tbody id="categories-list">
+          <!-- Categories will be inserted here -->
+          </tbody>
+        </table>
+
+        <div class="category-actions">
+          <i class="fas fa-plus-circle fa-fw add-category" id="add-category" title="Add new Category"></i>
+        </div>
+      </div>
+
   </section>
-  <script src="../browser-polyfill.js"></script>
+  <script src="../libs/browser-polyfill.js"></script>
+  <script src="../shared/theme.js"></script>
   <script src="settings.js"></script>
 </body>
-</html> 
+</html>

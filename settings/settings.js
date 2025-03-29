@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   const categoriesList = document.getElementById('categories-list');
   const addCategoryButton = document.getElementById('add-category');
+  const sessionTimeoutInput = document.getElementById('session-timeout');
   let saveTimeout;
+
+  // Initialize theme system with automatic detection
+  initializeTheme(null);
 
   const DEFAULT_CATEGORIES = [
     {
@@ -37,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
       pattern: 'bankofamerica\\.com|chase\\.com|wellsfargo\\.com|paypal\\.com|mint\\.com|robinhood\\.com|coinbase\\.com|fidelity\\.com|vanguard\\.com|schwab\\.com|etrade\\.com|tdameritrade\\.com|ally\\.com|capitalone\\.com|discover\\.com'
     }
   ];
+
+  // Default session timeout in minutes
+  const DEFAULT_SESSION_TIMEOUT = 10;
 
   // Create save status element
   const saveStatus = document.createElement('div');
@@ -102,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function debounceSync() {
     clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(syncCategories, 500);
+    saveTimeout = setTimeout(syncSettings, 500);
   }
 
   function syncCategories() {
@@ -115,8 +122,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Load saved categories
-  browser.storage.sync.get('categories').then(result => {
+  function syncSessionTimeout() {
+    const sessionTimeout = parseInt(sessionTimeoutInput.value, 10);
+    if (!isNaN(sessionTimeout) && sessionTimeout > 0) {
+      browser.storage.sync.set({ sessionTimeout }).then(() => {
+        console.log('Session timeout saved:', sessionTimeout);
+        showSaveStatus();
+      }).catch(error => {
+        console.error('Error saving session timeout:', error);
+      });
+    }
+  }
+
+  function syncSettings() {
+    syncCategories();
+    syncSessionTimeout();
+  }
+
+  // Load saved settings
+  browser.storage.sync.get(['categories', 'sessionTimeout']).then(result => {
+    // Handle categories
     const categories = result.categories || [];
     if (categories.length === 0) {
       // Add default categories if none exist
@@ -130,18 +155,26 @@ document.addEventListener('DOMContentLoaded', function() {
         categoriesList.appendChild(createCategoryElement(category));
       });
     }
+
+    // Handle session timeout
+    const sessionTimeout = result.sessionTimeout || DEFAULT_SESSION_TIMEOUT;
+    sessionTimeoutInput.value = sessionTimeout;
   }).catch(error => {
-    console.error('Error loading categories:', error);
+    console.error('Error loading settings:', error);
     // Add default categories if there's an error
     DEFAULT_CATEGORIES.forEach(category => {
       categoriesList.appendChild(createCategoryElement(category));
     });
-    // Save default categories
-    syncCategories();
+    // Set default session timeout
+    sessionTimeoutInput.value = DEFAULT_SESSION_TIMEOUT;
+    // Save default settings
+    syncSettings();
   });
 
-  // Add new category handler
+  // Add event listeners
   addCategoryButton.addEventListener('click', () => {
     categoriesList.appendChild(createCategoryElement());
   });
-}); 
+
+  sessionTimeoutInput.addEventListener('input', debounceSync);
+});
