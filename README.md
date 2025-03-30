@@ -1,4 +1,4 @@
-# History Stats Firefox Extension
+# BrowsingTime Firefox Extension
 
 ![icon](icons/icon-96.png)
 
@@ -52,7 +52,7 @@ Once the extension is published to the Firefox Add-ons store, you can install it
 
 ## Usage
 
-1. Click on the History Stats icon in your browser toolbar
+1. Click on the BrowsingTime icon in your browser toolbar
 2. The popup will display statistics about your browsing history
 3. Use the category filter to view statistics for specific website categories
 4. Click on "Open Extended View" for more detailed visualizations
@@ -60,7 +60,7 @@ Once the extension is published to the Firefox Add-ons store, you can install it
 
 ## How It Works
 
-History Stats accesses your browser history data (with your permission) and processes it locally in your browser. The extension:
+BrowsingTime accesses your browser history data (with your permission) and processes it locally in your browser. The extension:
 
 1. Retrieves history entries from the browser's history API
 2. Categorizes websites based on domain patterns you define
@@ -73,7 +73,7 @@ No data is sent to external servers - all processing happens on your device.
 
 The extension has the following structure:
 ```
-history-stats/
+browsing-time/
 ├── manifest.json       # Extension configuration
 ├── background.js       # Background script
 ├── libs/               # Third-party libraries
@@ -88,8 +88,8 @@ history-stats/
 
 1. Clone this repository
 ```
-git clone https://github.com/rolandortner/history-stats.git
-cd history-stats
+git clone https://github.com/rolandortner/browsing-time.git
+cd browsing-time
 ```
 
 2. Make your changes to the code
@@ -126,7 +126,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Project Link: [https://github.com/rolandortner/history-stats](https://github.com/rolandortner/history-stats)
+Project Link: [https://github.com/rolandortner/browsing-time](https://github.com/rolandortner/browsing-time)
 
 ## Roadmap
 
