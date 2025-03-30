@@ -217,8 +217,9 @@ input:focus {
 .stats-container {
   color: var(--text-color); 
   font-size: 12px;
-  height: 30px;
+  height: 45px;
+  margin: 0;
 }
 
-dt { float: left; clear: left; width: 6em; }
+dt { float: left; clear: left; width: 8em; }
 dd { float: left; }
