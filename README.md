@@ -124,9 +124,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The open-source community for inspiration and resources
 - Chart.js for the visualization library
 
-## Contact
+## Author
 
-Project Link: [https://github.com/rolandortner/browsing-time](https://github.com/rolandortner/browsing-time)
+Roland Ortner
+
+- GitHub: [rolandortner](https://github.com/rolandortner)
+- LinkedIn: [Roland Ortner](https://linkedin.com/in/rolandortner)
 
 ## Roadmap
 
